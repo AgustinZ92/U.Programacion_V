@@ -1,0 +1,141 @@
+<div class="bg-[#191919] min-h-screen p-5 box-border">
+
+  <header class="mb-5">
+
+    <button
+      (click)="cerrarSesion()"
+      class="rounded-lg bg-red-600 px-5 py-2.5 font-semibold text-white hover:bg-red-700"
+    >
+      Cerrar sesión
+    </button>
+
+    <a
+      href="/login"
+      class="ml-3 inline-block rounded-lg bg-[#282828] px-5 py-2.5 font-semibold text-white hover:bg-zinc-600 transition"
+    >
+      Iniciar sesión
+    </a>
+
+    <a
+      href="/registrar"
+      class="ml-3 inline-block rounded-lg bg-blue-600 px-5 py-2.5 font-semibold text-white hover:bg-blue-700 transition"
+    >
+      Registrarse
+    </a>
+
+  </header>
+
+  <h1
+    class="text-center text-[#00ff6e] text-[70px] bg-[#282828] p-5 rounded-[20px] shadow-[0_0_20px_rgb(0,255,110)] font-bold mb-4 max-md:text-[40px]"
+  >
+    Buscador Rick & Morty
+  </h1>
+
+  <input
+    [(ngModel)]="busqueda"
+    (input)="buscar()"
+    placeholder="Buscar personaje"
+    class="text-white w-full p-[15px] mt-5 mb-[30px] border-none rounded-[15px] text-xl box-border"
+  >
+
+  @if (errorApi) {
+    <div class="bg-red-100 text-red-700 p-4 rounded-lg mb-5">
+      {{ errorApi }}
+    </div>
+  }
+
+  <div class="bg-[#282828] rounded-[20px] p-5 mb-8">
+
+  <h2 class="text-[#00ff6e] text-3xl font-bold mb-5">
+    ❤️ Mis favoritos
+  </h2>
+
+  @if (cargandoFavoritos) {
+    <p class="text-white">
+      Cargando favoritos...
+    </p>
+  }
+
+  @if (!cargandoFavoritos && favoritos.length === 0) {
+    <p class="text-white">
+      Todavía no tenés personajes favoritos.
+    </p>
+  }
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+    @for (favorito of favoritos; track favorito.id) {
+
+      <div class="bg-[#323232] rounded-xl p-4">
+
+        <h3 class="text-[#00ff6e] text-xl font-bold">
+          {{ favorito.nombre }}
+        </h3>
+
+        <p class="text-white">
+          Especie: {{ favorito.especie }}
+        </p>
+
+        <p class="text-white">
+          Estado: {{ favorito.estado }}
+        </p>
+          <button
+          (click)="eliminarFavorito(favorito)"
+          class="mt-3 rounded-lg bg-red-600 px-4 py-2 font-semibold text-white hover:bg-red-700"
+          >
+            🗑️ Eliminar de favoritos
+          </button>
+        <button
+          (click)="cambiarEstado(favorito)"
+          class="mt-3 rounded-lg bg-yellow-500 px-4 py-2 font-semibold text-black hover:bg-yellow-400"
+          >
+            Cambiar estado
+        </button>
+      </div>
+
+    }
+
+  </div>
+
+</div>
+
+
+  <div
+    class="grid grid-cols-4 gap-[25px] max-[1000px]:grid-cols-2 max-[600px]:grid-cols-1"
+  >
+
+    @for (p of filtrados; track p.id) {
+
+      <div
+        class="bg-[#323232] rounded-[20px] p-[15px] text-center shadow-[5px_5px_20px_black] transition-transform duration-300 hover:scale-105"
+      >
+
+        <img
+          [src]="p.image"
+          [alt]="p.name"
+          class="w-full rounded-[15px]"
+        >
+
+        <h2 class="text-[#00ff6e] text-[28px] font-bold mt-2">
+          {{ p.name }}
+        </h2>
+
+        <p class="text-white text-lg mb-4">
+          {{ p.species }}
+        </p>
+
+        <!-- BOTÓN GUARDAR FAVORITO -->
+        <button
+          (click)="guardarPersonaje(p)"
+          class="w-full rounded-lg bg-green-600 px-4 py-2 font-semibold text-white hover:bg-green-700 transition"
+        >
+          ❤️favorito
+        </button>
+
+      </div>
+
+    }
+
+  </div>
+
+</div>
