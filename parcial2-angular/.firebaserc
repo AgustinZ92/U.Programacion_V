@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "angularproject-2ec17"
-  }
+    "default": "apirickandmorty-38257"
+  },
+  "targets": {},
+  "etags": {}
 }
